@@ -1,0 +1,13 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+
+  <polygon points="70,0 130,0 100,30" fill="darkred" />
+  <polygon points="70,200 130,200 100,170" fill="darkred" />
+  <polygon points="0,70 0,130 30,100" fill="darkred" />
+  <polygon points="200,70 200,130 170,100" fill="darkred" />
+
+  <rect x="0" y="70" width="200" height="60" fill="red" transform="rotate(45 100 100)" />
+  <rect x="0" y="70" width="200" height="60" fill="red" transform="rotate(-45 100 100)" />
+
+  <circle cx="100" cy="100" r="30" fill="transparent" stroke="darkred" stroke-width="25" />
+  <circle cx="100" cy="100" r="15" fill="red" />
+</svg>
