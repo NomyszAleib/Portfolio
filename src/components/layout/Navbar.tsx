@@ -9,7 +9,7 @@ import {
   DrawerOverlay,
   DrawerClose,
 } from "@/components/ui/drawer";
-import { Link } from "react-router-dom"; // Dodano React Router dla linków
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,7 +28,7 @@ const Navbar = () => {
   const closeMenu = () => setIsMenuOpen(false);
 
   const navLinks = [
-    { name: t("about"), href: "#about" }, // Zmiana na ścieżki routingu
+    { name: t("about"), href: "#about" }, 
     { name: t("skills"), href: "#skills" },
     { name: t("projects"), href: "#projects" },
     { name: t("contact"), href: "#contact" },
@@ -50,12 +50,9 @@ const Navbar = () => {
             onClick={closeMenu}
           >
             <img
-              src="/logo/logo.svg" // Bezwzględna ścieżka w folderze public
+              src="/logo/logo.svg" 
               alt="Szymon Biela Logo"
               className="h-8 w-8"
-              onError={(e) => {
-                e.target.src = "/logo/fallback-logo.png"; // Fallback dla logo
-              }}
             />
             <span className="text-accent">Szymon</span>
             <span>Biela</span>
