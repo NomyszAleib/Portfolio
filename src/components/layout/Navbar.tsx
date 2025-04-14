@@ -26,15 +26,19 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
-  // Smooth scroll handler
-  const handleNavClick = (e, href) => {
-    e.preventDefault();
+  // Simplified smooth scroll handler with delay for Drawer animation
+  const handleNavClick = (href) => {
     const targetId = href.replace("#", "");
-    const element = document.getElementById(targetId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-    closeMenu(); // Close the menu after clicking
+    setTimeout(() => {
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      } else {
+        // Fallback to scroll to top if section not found
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }, 300); // Delay to allow Drawer to close
+    closeMenu();
   };
 
   const navLinks = [
@@ -56,8 +60,8 @@ const Navbar = () => {
         <nav className="flex items-center justify-between">
           <a
             href="#"
-            className="flex items-center gap-2 text-xl font-bold animate-fade-in-left"
-            onClick={(e) => handleNavClick(e, "#home")}
+            className="flex items-center gap-2 text-xl font-bold animate-fade-in-left pr-4"
+            onClick={() => handleNavClick("#home")}
           >
             <img src="logo/logo.svg" alt="logo" className="h-8 w-8" />
             <span className="text-accent">Szymon</span>Biela
@@ -76,7 +80,10 @@ const Navbar = () => {
                   <a
                     href={link.href}
                     className="nav-link-animated transition-all duration-300 hover:backdrop-blur-sm hover:bg-[hsl(var(--background)/0.3)] hover:rounded-md hover:px-2 hover:py-1"
-                    onClick={(e) => handleNavClick(e, link.href)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavClick(link.href);
+                    }}
                   >
                     {link.name}
                   </a>
@@ -95,7 +102,7 @@ const Navbar = () => {
                 aria-label="Change language"
               >
                 <Globe size={20} className="text-foreground" />
-                <span className="ml-1 text-xs font-bold absolute -top-1 -right-1 bg-[hsl(var(--accent))] text-white rounded-full w-4 h-4 flex items-center justify-center">
+                <span className="ml-1 text-xs font-bold absolute -top-2 -right-2 bg-[hsl(var(--accent))] text-white rounded-full w-5 h-5 flex items-center justify-center">
                   {language.toUpperCase()}
                 </span>
               </button>
@@ -121,7 +128,7 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-          <div className="flex items-center gap-4 md:hidden">
+          <div className="flex items-center gap-2 md:hidden">
             <div
               className="relative transition-all duration-300 hover:scale-110 group"
               style={{ animation: `fadeInDown 0.7s ease forwards`, opacity: 0 }}
@@ -132,7 +139,7 @@ const Navbar = () => {
                 aria-label="Change language"
               >
                 <Globe size={20} className="text-foreground" />
-                <span className="ml-1 text-xs font-bold absolute -top-1 -right-1 bg-accent text-white rounded-full w-4 h-4 flex items-center justify-center">
+                <span className="ml-1 text-xs font-bold absolute -top-2 -right-2 bg-accent text-white rounded-full w-5 h-5 flex items-center justify-center">
                   {language.toUpperCase()}
                 </span>
               </button>
@@ -175,8 +182,8 @@ const Navbar = () => {
             <div className="flex justify-between items-center mb-10">
               <a
                 href="#"
-                className="flex items-center gap-2 text-xl font-bold animate-fade-in-left"
-                onClick={(e) => handleNavClick(e, "#home")}
+                className="flex items-center gap-2 text-xl font-bold animate-fade-in-left pr-4"
+                onClick={() => handleNavClick("#home")}
               >
                 <img src="logo/logo.svg" alt="logo" className="h-8 w-8" />
                 <span className="text-[hsl(var(--accent))]">Szymon</span>Biela
@@ -206,7 +213,10 @@ const Navbar = () => {
                   <a
                     href={link.href}
                     className="text-2xl font-medium flex items-center space-x-2 group"
-                    onClick={(e) => handleNavClick(e, link.href)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavClick(link.href);
+                    }}
                   >
                     <span className="w-0 h-0.5 bg-[hsl(var(--accent))] transition-all duration-300 group-hover:w-5"></span>
                     <span className="group-hover:text-[hsl(var(--accent))] transition-colors">
@@ -227,7 +237,7 @@ const Navbar = () => {
                   aria-label="Change language"
                 >
                   <Globe size={20} className="text-foreground" />
-                  <span className="ml-1 text-xs font-bold absolute -top-1 -right-1 bg-[hsl(var(--accent))] text-white rounded-full w-4 h-4 flex items-center justify-center">
+                  <span className="ml-1 text-xs font-bold absolute -top-2 -right-2 bg-[hsl(var(--accent))] text-white rounded-full w-5 h-5 flex items-center justify-center">
                     {language.toUpperCase()}
                   </span>
                 </button>
