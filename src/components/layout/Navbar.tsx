@@ -9,7 +9,6 @@ import {
   DrawerOverlay,
   DrawerClose,
 } from "@/components/ui/drawer";
-import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,11 +27,21 @@ const Navbar = () => {
   const closeMenu = () => setIsMenuOpen(false);
 
   const navLinks = [
-    { name: t("about"), href: "#about" }, 
+    { name: t("about"), href: "#about" },
     { name: t("skills"), href: "#skills" },
     { name: t("projects"), href: "#projects" },
     { name: t("contact"), href: "#contact" },
   ];
+
+  // Funkcja do przewijania do sekcji
+  const scrollToSection = (href) => {
+    closeMenu();
+    const sectionId = href.replace("#", "");
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <header
@@ -44,19 +53,23 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between">
-          <Link
-            to="/"
+          <a
+            href="/"
             className="flex items-center gap-2 text-xl font-bold animate-fade-in-left"
-            onClick={closeMenu}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             <img
-              src="/logo/logo.svg" 
+              src="/logo/logo.svg"
               alt="Szymon Biela Logo"
               className="h-8 w-8"
+              onError={(e) => {
+                console.warn("Failed to load logo, using fallback");
+                e.target.src = "/logo/fallback-logo.png";
+              }}
             />
             <span className="text-accent">Szymon</span>
             <span>Biela</span>
-          </Link>
+          </a>
           <div className="hidden md:flex items-center justify-center flex-1">
             <ul className="flex items-center gap-6">
               {navLinks.map((link, index) => (
@@ -68,13 +81,16 @@ const Navbar = () => {
                     opacity: 0,
                   }}
                 >
-                  <Link
-                    to={link.href}
+                  <a
+                    href={link.href}
                     className="nav-link-animated transition-all duration-300 hover:backdrop-blur-sm hover:bg-[hsl(var(--background)/0.3)] hover:rounded-md hover:px-2 hover:py-1"
-                    onClick={closeMenu}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection(link.href);
+                    }}
                   >
                     {link.name}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -90,7 +106,7 @@ const Navbar = () => {
                 aria-label="Change language"
               >
                 <Globe size={20} className="text-foreground" />
-                <span className="ml-1 text-xs font-bold absolute top-0 right-0 bg-[hsl(var(--accent))] text-white rounded-full w-4 h-4 flex items-center justify-center">
+                <span className="ml-1 text-xs font-bold absolute top-[-4px] right-[-4px] bg-[hsl(var(--accent))] text-white rounded-full w-4 h-4 flex items-center justify-center">
                   {language.toUpperCase()}
                 </span>
               </button>
@@ -116,7 +132,7 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex items-center gap-1 md:hidden">
             <div
               className="relative transition-all duration-300 hover:scale-110 group"
               style={{ animation: `fadeInDown 0.7s ease forwards`, opacity: 0 }}
@@ -127,7 +143,7 @@ const Navbar = () => {
                 aria-label="Change language"
               >
                 <Globe size={20} className="text-foreground" />
-                <span className="ml-1 text-xs font-bold absolute top-0 right-0 bg-accent text-white rounded-full w-4 h-4 flex items-center justify-center">
+                <span className="ml-1 text-xs font-bold absolute top-[-4px] right-[-4px] bg-accent text-white rounded-full w-4 h-4 flex items-center justify-center">
                   {language.toUpperCase()}
                 </span>
               </button>
@@ -168,22 +184,23 @@ const Navbar = () => {
         <DrawerContent className="h-[80vh] bg-[hsl(var(--background))] border-[hsl(var(--border))]">
           <div className="flex flex-col h-full p-6">
             <div className="flex justify-between items-center mb-10">
-              <Link
-                to="/"
+              <a
+                href="/"
                 className="flex items-center gap-2 text-xl font-bold animate-fade-in-left"
-                onClick={closeMenu}
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               >
                 <img
                   src="/logo/logo.svg"
                   alt="Szymon Biela Logo"
                   className="h-8 w-8"
                   onError={(e) => {
+                    console.warn("Failed to load logo, using fallback");
                     e.target.src = "/logo/fallback-logo.png";
                   }}
                 />
                 <span className="text-[hsl(var(--accent))]">Szymon</span>
                 <span>Biela</span>
-              </Link>
+              </a>
               <DrawerClose
                 className="p-2 rounded-full hover:bg-muted transition-colors"
                 style={{
@@ -206,16 +223,19 @@ const Navbar = () => {
                     opacity: 0,
                   }}
                 >
-                  <Link
-                    to={link.href}
+                  <a
+                    href={link.href}
                     className="text-2xl font-medium flex items-center space-x-2 group"
-                    onClick={closeMenu}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection(link.href);
+                    }}
                   >
                     <span className="w-0 h-0.5 bg-[hsl(var(--accent))] transition-all duration-300 group-hover:w-5"></span>
                     <span className="group-hover:text-[hsl(var(--accent))] transition-colors">
                       {link.name}
                     </span>
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -230,7 +250,7 @@ const Navbar = () => {
                   aria-label="Change language"
                 >
                   <Globe size={20} className="text-foreground" />
-                  <span className="ml-1 text-xs font-bold absolute top-0 right-0 bg-[hsl(var(--accent))] text-white rounded-full w-4 h-4 flex items-center justify-center">
+                  <span className="ml-1 text-xs font-bold absolute top-[-4px] right-[-4px] bg-[hsl(var(--accent))] text-white rounded-full w-4 h-4 flex items-center justify-center">
                     {language.toUpperCase()}
                   </span>
                 </button>
