@@ -9,6 +9,7 @@ import {
   DrawerOverlay,
   DrawerClose,
 } from "@/components/ui/drawer";
+import { Link } from "react-router-dom"; // Dodano React Router dla linków
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,10 +28,10 @@ const Navbar = () => {
   const closeMenu = () => setIsMenuOpen(false);
 
   const navLinks = [
-    { name: t("about"), href: "#about" },
-    { name: t("skills"), href: "#skills" },
-    { name: t("projects"), href: "#project" },
-    { name: t("contact"), href: "#contact" },
+    { name: t("about"), href: "/about" }, // Zmiana na ścieżki routingu
+    { name: t("skills"), href: "/skills" },
+    { name: t("projects"), href: "/projects" },
+    { name: t("contact"), href: "/contact" },
   ];
 
   return (
@@ -43,13 +44,22 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between">
-          <a
-            href="#"
+          <Link
+            to="/"
             className="flex items-center gap-2 text-xl font-bold animate-fade-in-left"
+            onClick={closeMenu}
           >
-            <img src="logo/logo.svg" alt="logo" className="h-8 w-8" />
-            <span className="text-accent">Szymon</span>Biela
-          </a>
+            <img
+              src="/logo/logo.svg" // Bezwzględna ścieżka w folderze public
+              alt="Szymon Biela Logo"
+              className="h-8 w-8"
+              onError={(e) => {
+                e.target.src = "/logo/fallback-logo.png"; // Fallback dla logo
+              }}
+            />
+            <span className="text-accent">Szymon</span>
+            <span>Biela</span>
+          </Link>
           <div className="hidden md:flex items-center justify-center flex-1">
             <ul className="flex items-center gap-6">
               {navLinks.map((link, index) => (
@@ -61,13 +71,13 @@ const Navbar = () => {
                     opacity: 0,
                   }}
                 >
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="nav-link-animated transition-all duration-300 hover:backdrop-blur-sm hover:bg-[hsl(var(--background)/0.3)] hover:rounded-md hover:px-2 hover:py-1"
                     onClick={closeMenu}
                   >
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -83,7 +93,7 @@ const Navbar = () => {
                 aria-label="Change language"
               >
                 <Globe size={20} className="text-foreground" />
-                <span className="ml-1 text-xs font-bold absolute -top-1 -right-1 bg-[hsl(var(--accent))] text-white rounded-full w-4 h-4 flex items-center justify-center">
+                <span className="ml-1 text-xs font-bold absolute top-0 right-0 bg-[hsl(var(--accent))] text-white rounded-full w-4 h-4 flex items-center justify-center">
                   {language.toUpperCase()}
                 </span>
               </button>
@@ -109,7 +119,7 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-          <div className="flex items-center gap-4 md:hidden">
+          <div className="flex items-center gap-2 md:hidden">
             <div
               className="relative transition-all duration-300 hover:scale-110 group"
               style={{ animation: `fadeInDown 0.7s ease forwards`, opacity: 0 }}
@@ -120,7 +130,7 @@ const Navbar = () => {
                 aria-label="Change language"
               >
                 <Globe size={20} className="text-foreground" />
-                <span className="ml-1 text-xs font-bold absolute -top-1 -right-1 bg-accent text-white rounded-full w-4 h-4 flex items-center justify-center">
+                <span className="ml-1 text-xs font-bold absolute top-0 right-0 bg-accent text-white rounded-full w-4 h-4 flex items-center justify-center">
                   {language.toUpperCase()}
                 </span>
               </button>
@@ -161,13 +171,22 @@ const Navbar = () => {
         <DrawerContent className="h-[80vh] bg-[hsl(var(--background))] border-[hsl(var(--border))]">
           <div className="flex flex-col h-full p-6">
             <div className="flex justify-between items-center mb-10">
-              <a
-                href="#"
+              <Link
+                to="/"
                 className="flex items-center gap-2 text-xl font-bold animate-fade-in-left"
+                onClick={closeMenu}
               >
-                <img src="logo/logo.svg" alt="logo" className="h-8 w-8" />
-                <span className="text-[hsl(var(--accent))]">Szymon</span>Biela
-              </a>
+                <img
+                  src="/logo/logo.svg"
+                  alt="Szymon Biela Logo"
+                  className="h-8 w-8"
+                  onError={(e) => {
+                    e.target.src = "/logo/fallback-logo.png";
+                  }}
+                />
+                <span className="text-[hsl(var(--accent))]">Szymon</span>
+                <span>Biela</span>
+              </Link>
               <DrawerClose
                 className="p-2 rounded-full hover:bg-muted transition-colors"
                 style={{
@@ -190,8 +209,8 @@ const Navbar = () => {
                     opacity: 0,
                   }}
                 >
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-2xl font-medium flex items-center space-x-2 group"
                     onClick={closeMenu}
                   >
@@ -199,7 +218,7 @@ const Navbar = () => {
                     <span className="group-hover:text-[hsl(var(--accent))] transition-colors">
                       {link.name}
                     </span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -214,7 +233,7 @@ const Navbar = () => {
                   aria-label="Change language"
                 >
                   <Globe size={20} className="text-foreground" />
-                  <span className="ml-1 text-xs font-bold absolute -top-1 -right-1 bg-[hsl(var(--accent))] text-white rounded-full w-4 h-4 flex items-center justify-center">
+                  <span className="ml-1 text-xs font-bold absolute top-0 right-0 bg-[hsl(var(--accent))] text-white rounded-full w-4 h-4 flex items-center justify-center">
                     {language.toUpperCase()}
                   </span>
                 </button>
