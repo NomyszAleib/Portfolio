@@ -26,11 +26,16 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
+  const scrollToSection = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    closeMenu(); // Zamknięcie menu po kliknięciu
+  };
+
   const navLinks = [
-    { name: t("about"), href: "#about" },
-    { name: t("skills"), href: "#skills" },
-    { name: t("projects"), href: "#project" },
-    { name: t("contact"), href: "#contact" },
+    { name: t("about"), href: "about" },
+    { name: t("skills"), href: "skills" },
+    { name: t("projects"), href: "projects" },
+    { name: t("contact"), href: "contact" },
   ];
 
   return (
@@ -62,9 +67,12 @@ const Navbar = () => {
                   }}
                 >
                   <a
-                    href={link.href}
+                    href={`#${link.href}`}
                     className="nav-link-animated transition-all duration-300 hover:backdrop-blur-sm hover:bg-[hsl(var(--background)/0.3)] hover:rounded-md hover:px-2 hover:py-1"
-                    onClick={closeMenu}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection(link.href); // Wywołanie funkcji scroll
+                    }}
                   >
                     {link.name}
                   </a>
@@ -191,9 +199,12 @@ const Navbar = () => {
                   }}
                 >
                   <a
-                    href={link.href}
+                    href={`#${link.href}`}
                     className="text-2xl font-medium flex items-center space-x-2 group"
-                    onClick={closeMenu}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection(link.href); // Wywołanie scroll
+                    }}
                   >
                     <span className="w-0 h-0.5 bg-[hsl(var(--accent))] transition-all duration-300 group-hover:w-5"></span>
                     <span className="group-hover:text-[hsl(var(--accent))] transition-colors">
