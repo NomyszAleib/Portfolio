@@ -26,9 +26,13 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
+  // Funkcja do przewijania do sekcji
   const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    closeMenu(); // Zamknięcie menu po kliknięciu
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      closeMenu(); // Zamykamy menu po kliknięciu
+    }
   };
 
   const navLinks = [
@@ -66,12 +70,12 @@ const Navbar = () => {
                     opacity: 0,
                   }}
                 >
+                  {/* Usuwamy href="#" i zamiast tego używamy onClick */}
                   <a
-                    href={`#${link.href}`}
                     className="nav-link-animated transition-all duration-300 hover:backdrop-blur-sm hover:bg-[hsl(var(--background)/0.3)] hover:rounded-md hover:px-2 hover:py-1"
                     onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection(link.href); // Wywołanie funkcji scroll
+                      e.preventDefault(); // Zapobiegamy domyślnemu działaniu
+                      scrollToSection(link.href); // Przewijamy do sekcji
                     }}
                   >
                     {link.name}
@@ -199,11 +203,10 @@ const Navbar = () => {
                   }}
                 >
                   <a
-                    href={`#${link.href}`}
                     className="text-2xl font-medium flex items-center space-x-2 group"
                     onClick={(e) => {
                       e.preventDefault();
-                      scrollToSection(link.href); // Wywołanie scroll
+                      scrollToSection(link.href); // Przewijanie
                     }}
                   >
                     <span className="w-0 h-0.5 bg-[hsl(var(--accent))] transition-all duration-300 group-hover:w-5"></span>
