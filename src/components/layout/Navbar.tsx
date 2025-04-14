@@ -33,17 +33,6 @@ const Navbar = () => {
     { name: t("contact"), href: "#contact" },
   ];
 
-  // Funkcja do obsługi przewijania
-  const handleNavClick = (e, href) => {
-    e.preventDefault();
-    const targetId = href.replace("#", "");
-    const element = document.getElementById(targetId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-    closeMenu(); // Zamknij menu po kliknięciu
-  };
-
   return (
     <header
       className={`fixed top-2 left-4 right-4 z-50 transition-all duration-300 rounded-3xl border ${
@@ -55,9 +44,8 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between">
           <a
-            href="#top"
+            href="#"
             className="flex items-center gap-2 text-xl font-bold animate-fade-in-left"
-            onClick={(e) => handleNavClick(e, "#top")}
           >
             <img src="logo/logo.svg" alt="logo" className="h-8 w-8" />
             <span className="text-accent">Szymon</span>Biela
@@ -76,7 +64,7 @@ const Navbar = () => {
                   <a
                     href={link.href}
                     className="nav-link-animated transition-all duration-300 hover:backdrop-blur-sm hover:bg-[hsl(var(--background)/0.3)] hover:rounded-md hover:px-2 hover:py-1"
-                    onClick={(e) => handleNavClick(e, link.href)}
+                    onClick={closeMenu}
                   >
                     {link.name}
                   </a>
@@ -174,9 +162,8 @@ const Navbar = () => {
           <div className="flex flex-col h-full p-6">
             <div className="flex justify-between items-center mb-10">
               <a
-                href="#top"
+                href="#"
                 className="flex items-center gap-2 text-xl font-bold animate-fade-in-left"
-                onClick={(e) => handleNavClick(e, "#top")}
               >
                 <img src="logo/logo.svg" alt="logo" className="h-8 w-8" />
                 <span className="text-[hsl(var(--accent))]">Szymon</span>Biela
@@ -206,7 +193,7 @@ const Navbar = () => {
                   <a
                     href={link.href}
                     className="text-2xl font-medium flex items-center space-x-2 group"
-                    onClick={(e) => handleNavClick(e, link.href)}
+                    onClick={closeMenu}
                   >
                     <span className="w-0 h-0.5 bg-[hsl(var(--accent))] transition-all duration-300 group-hover:w-5"></span>
                     <span className="group-hover:text-[hsl(var(--accent))] transition-colors">
