@@ -24,21 +24,16 @@ const Navbar = () => {
   }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => setIsMenuOpen(false);
 
-  // Simplified smooth scroll handler with delay for Drawer animation
   const handleNavClick = (href) => {
+    setIsMenuOpen(false); // Close Drawer immediately
     const targetId = href.replace("#", "");
-    setTimeout(() => {
-      const element = document.getElementById(targetId);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      } else {
-        // Fallback to scroll to top if section not found
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-    }, 300); // Delay to allow Drawer to close
-    closeMenu();
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" }); // Fallback to top
+    }
   };
 
   const navLinks = [
@@ -210,19 +205,15 @@ const Navbar = () => {
                     opacity: 0,
                   }}
                 >
-                  <a
-                    href={link.href}
-                    className="text-2xl font-medium flex items-center space-x-2 group"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(link.href);
-                    }}
+                  <button
+                    className="text-2xl font-medium flex items-center space-x-2 group w-full text-left"
+                    onClick={() => handleNavClick(link.href)}
                   >
                     <span className="w-0 h-0.5 bg-[hsl(var(--accent))] transition-all duration-300 group-hover:w-5"></span>
                     <span className="group-hover:text-[hsl(var(--accent))] transition-colors">
                       {link.name}
                     </span>
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
