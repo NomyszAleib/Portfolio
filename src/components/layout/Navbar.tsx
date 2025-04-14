@@ -26,21 +26,22 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
+  const navLinks = [
+    { name: t("about"), href: "#about" },
+    { name: t("skills"), href: "#skills" },
+    { name: t("projects"), href: "#projects" },
+    { name: t("contact"), href: "#contact" },
+  ];
+
   // Funkcja do przewijania do sekcji
-  const scrollToSection = (id) => {
-    const section = document.getElementById(id);
+  const scrollToSection = (href) => {
+    closeMenu();
+    const sectionId = href.replace("#", "");
+    const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
-      closeMenu(); // Zamykamy menu po kliknięciu
+      section.scrollIntoView({ behavior: "smooth" });
     }
   };
-
-  const navLinks = [
-    { name: t("about"), href: "about" },
-    { name: t("skills"), href: "skills" },
-    { name: t("projects"), href: "projects" },
-    { name: t("contact"), href: "contact" },
-  ];
 
   return (
     <header
@@ -53,11 +54,21 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between">
           <a
-            href="#"
+            href="/"
             className="flex items-center gap-2 text-xl font-bold animate-fade-in-left"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
-            <img src="logo/logo.svg" alt="logo" className="h-8 w-8" />
-            <span className="text-accent">Szymon</span>Biela
+            <img
+              src="/logo/logo.svg"
+              alt="Szymon Biela Logo"
+              className="h-8 w-8"
+              onError={(e) => {
+                console.warn("Failed to load logo, using fallback");
+                e.target.src = "/logo/fallback-logo.png";
+              }}
+            />
+            <span className="text-accent">Szymon</span>
+            <span>Biela</span>
           </a>
           <div className="hidden md:flex items-center justify-center flex-1">
             <ul className="flex items-center gap-6">
@@ -70,12 +81,12 @@ const Navbar = () => {
                     opacity: 0,
                   }}
                 >
-                  {/* Usuwamy href="#" i zamiast tego używamy onClick */}
                   <a
+                    href={link.href}
                     className="nav-link-animated transition-all duration-300 hover:backdrop-blur-sm hover:bg-[hsl(var(--background)/0.3)] hover:rounded-md hover:px-2 hover:py-1"
                     onClick={(e) => {
-                      e.preventDefault(); // Zapobiegamy domyślnemu działaniu
-                      scrollToSection(link.href); // Przewijamy do sekcji
+                      e.preventDefault();
+                      scrollToSection(link.href);
                     }}
                   >
                     {link.name}
@@ -95,7 +106,7 @@ const Navbar = () => {
                 aria-label="Change language"
               >
                 <Globe size={20} className="text-foreground" />
-                <span className="ml-1 text-xs font-bold absolute -top-1 -right-1 bg-[hsl(var(--accent))] text-white rounded-full w-4 h-4 flex items-center justify-center">
+                <span className="ml-1 text-xs font-bold absolute top-[-4px] right-[-4px] bg-[hsl(var(--accent))] text-white rounded-full w-4 h-4 flex items-center justify-center">
                   {language.toUpperCase()}
                 </span>
               </button>
@@ -121,7 +132,7 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-          <div className="flex items-center gap-4 md:hidden">
+          <div className="flex items-center gap-1 md:hidden">
             <div
               className="relative transition-all duration-300 hover:scale-110 group"
               style={{ animation: `fadeInDown 0.7s ease forwards`, opacity: 0 }}
@@ -132,7 +143,7 @@ const Navbar = () => {
                 aria-label="Change language"
               >
                 <Globe size={20} className="text-foreground" />
-                <span className="ml-1 text-xs font-bold absolute -top-1 -right-1 bg-accent text-white rounded-full w-4 h-4 flex items-center justify-center">
+                <span className="ml-1 text-xs font-bold absolute top-[-4px] right-[-4px] bg-accent text-white rounded-full w-4 h-4 flex items-center justify-center">
                   {language.toUpperCase()}
                 </span>
               </button>
@@ -174,11 +185,21 @@ const Navbar = () => {
           <div className="flex flex-col h-full p-6">
             <div className="flex justify-between items-center mb-10">
               <a
-                href="#"
+                href="/"
                 className="flex items-center gap-2 text-xl font-bold animate-fade-in-left"
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               >
-                <img src="logo/logo.svg" alt="logo" className="h-8 w-8" />
-                <span className="text-[hsl(var(--accent))]">Szymon</span>Biela
+                <img
+                  src="/logo/logo.svg"
+                  alt="Szymon Biela Logo"
+                  className="h-8 w-8"
+                  onError={(e) => {
+                    console.warn("Failed to load logo, using fallback");
+                    e.target.src = "/logo/fallback-logo.png";
+                  }}
+                />
+                <span className="text-[hsl(var(--accent))]">Szymon</span>
+                <span>Biela</span>
               </a>
               <DrawerClose
                 className="p-2 rounded-full hover:bg-muted transition-colors"
@@ -203,10 +224,11 @@ const Navbar = () => {
                   }}
                 >
                   <a
+                    href={link.href}
                     className="text-2xl font-medium flex items-center space-x-2 group"
                     onClick={(e) => {
                       e.preventDefault();
-                      scrollToSection(link.href); // Przewijanie
+                      scrollToSection(link.href);
                     }}
                   >
                     <span className="w-0 h-0.5 bg-[hsl(var(--accent))] transition-all duration-300 group-hover:w-5"></span>
@@ -228,7 +250,7 @@ const Navbar = () => {
                   aria-label="Change language"
                 >
                   <Globe size={20} className="text-foreground" />
-                  <span className="ml-1 text-xs font-bold absolute -top-1 -right-1 bg-[hsl(var(--accent))] text-white rounded-full w-4 h-4 flex items-center justify-center">
+                  <span className="ml-1 text-xs font-bold absolute top-[-4px] right-[-4px] bg-[hsl(var(--accent))] text-white rounded-full w-4 h-4 flex items-center justify-center">
                     {language.toUpperCase()}
                   </span>
                 </button>
