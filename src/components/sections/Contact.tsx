@@ -3,6 +3,9 @@ import { MapPin, Phone, Mail } from "lucide-react";
 import { useLanguage } from "@/hooks/use-language";
 import emailjs from "@emailjs/browser";
 
+// Initialize EmailJS with your public key
+emailjs.init("Zbvyisg6N-HdYG4iF");
+
 const Contact = () => {
   const form = useRef();
   const [formData, setFormData] = useState({
@@ -18,6 +21,8 @@ const Contact = () => {
   const sendEmail = (e) => {
     e.preventDefault();
 
+    console.log("Form reference:", form.current); // Debug form ref
+
     emailjs
       .sendForm("service_a4t5s8b", "template_8sb5at4", form.current, {
         publicKey: "Zbvyisg6N-HdYG4iF",
@@ -26,15 +31,17 @@ const Contact = () => {
         () => {
           console.log("SUCCESS!");
           setFormData({ name: "", email: "", message: "" });
+          alert("Message sent successfully!");
         },
         (error) => {
-          console.log("FAILED...", error.text);
+          console.error("FAILED...", error);
+          alert("Failed to send message. Please try again later.");
         }
       );
   };
 
   const { t } = useLanguage();
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
