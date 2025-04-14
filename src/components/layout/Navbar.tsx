@@ -28,10 +28,10 @@ const Navbar = () => {
   const closeMenu = () => setIsMenuOpen(false);
 
   const navLinks = [
-    { name: t("about"), href: "/about" }, // Zmiana na ścieżki routingu
-    { name: t("skills"), href: "/skills" },
-    { name: t("projects"), href: "/projects" },
-    { name: t("contact"), href: "/contact" },
+    { name: t("about"), href: "#about" }, // Zmiana na ścieżki routingu
+    { name: t("skills"), href: "#skills" },
+    { name: t("projects"), href: "#projects" },
+    { name: t("contact"), href: "#contact" },
   ];
 
   return (
